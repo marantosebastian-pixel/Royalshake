@@ -1,0 +1,481 @@
+
+/* ESTILOS GENERALES */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fffaf0;
+  color: #17243b;
+}
+
+/* BARRA DE NAVEGACIÓN */
+.navbar {
+  width: 100%;
+  min-height: 80px;
+  padding: 20px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #101c32;
+}
+
+.navbar h2 {
+  color: #d9b66f;
+  letter-spacing: 3px;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 30px;
+}
+
+.navbar nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navbar nav a:hover {
+  color: #d9b66f;
+}
+
+/* PORTADA PRINCIPAL */
+.hero {
+  min-height: 520px;
+  padding: 80px 10%;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(120deg, #101c32, #263d5c);
+  color: white;
+}
+
+.hero-content {
+  max-width: 650px;
+}
+
+.subtitle {
+  color: #d9b66f;
+  letter-spacing: 4px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 55px;
+  line-height: 1.15;
+  margin-bottom: 25px;
+}
+
+.hero-content > p:not(.subtitle) {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #e4e7ed;
+  margin-bottom: 35px;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #d9b66f;
+  color: #101c32;
+  padding: 15px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #f0d69e;
+}
+
+/* PRODUCTOS */
+.productos {
+  min-height: 250px;
+  padding: 75px 10%;
+  text-align: center;
+}
+
+.productos h2 {
+  font-size: 34px;
+  margin-bottom: 20px;
+  color: #17243b;
+}
+
+.productos p {
+  color: #666;
+  font-size: 17px;
+}
+
+/* PIE DE PÁGINA */
+footer {
+  background-color: #101c32;
+  color: white;
+  padding: 25px;
+  text-align: center;
+}
+
+/* ADAPTACIÓN A CELULARES */
+@media (max-width: 650px) {
+  .navbar {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .navbar nav {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero {
+    min-height: 450px;
+    padding: 60px 8%;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .hero-content > p:not(.subtitle) {
+    font-size: 16px;
+  }
+
+  .productos h2 {
+    font-size: 28px;
+  }
+}
+
+/* CATÁLOGO DE PRODUCTOS */
+.productos-subtitle {
+  color: #b38b42;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.productos-intro {
+  margin-bottom: 35px;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-top: 35px;
+}
+
+.producto-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+  transition: transform 0.3s;
+  text-align: left;
+}
+
+.producto-card:hover {
+  transform: translateY(-7px);
+}
+
+.producto-imagen {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 75px;
+}
+
+.chocolate {
+  background: #ead6c5;
+}
+
+.fresa {
+  background: #f8dce3;
+}
+
+.oreo {
+  background: #d9dce4;
+}
+
+.vainilla {
+  background: #f5edcf;
+}
+
+.producto-info {
+  padding: 20px;
+}
+
+.producto-info h3 {
+  margin-bottom: 12px;
+  color: #17243b;
+}
+
+.producto-info p {
+  color: #666;
+  line-height: 1.5;
+  font-size: 14px;
+  min-height: 63px;
+}
+
+.producto-info span {
+  display: block;
+  margin-top: 15px;
+  color: #a17b36;
+  font-weight: bold;
+}
+
+@media (max-width: 850px) {
+  .productos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.producto-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* FORMULARIO DE PEDIDOS */
+.contacto {
+  padding: 75px 10%;
+  background-color: #f2eadb;
+  text-align: center;
+}
+
+.contacto h2 {
+  font-size: 34px;
+  margin-bottom: 15px;
+}
+
+.contacto > p:not(.productos-subtitle) {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.contacto form {
+  max-width: 550px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 12px;
+}
+
+.contacto label {
+  font-weight: bold;
+  color: #17243b;
+}
+
+.contacto input,
+.contacto select,
+.contacto textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.contacto textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.contacto button {
+  border: none;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+/* ASISTENTE VIRTUAL ROYALSHAKE */
+
+.asistente-ia {
+  padding: 70px 20px;
+  text-align: center;
+  background: #fff5ed;
+}
+
+.asistente-ia h2 {
+  font-size: 2rem;
+  margin: 15px 0;
+  color: #3b2118;
+}
+
+.asistente-ia > p {
+  color: #76594d;
+  margin-bottom: 25px;
+}
+
+.asistente-contenedor {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.asistente-contenedor input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid #d9b9a6;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.asistente-contenedor button {
+  padding: 14px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #713c27;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.asistente-contenedor button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.respuesta-ia {
+  max-width: 650px;
+  margin: 25px auto 0;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  text-align: left;
+  color: #3b2118;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+/* CHAT ROYALSHAKE */
+
+.chat-mensajes {
+  max-width: 650px;
+  margin: 25px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.mensaje-chat {
+  max-width: 85%;
+  padding: 13px 17px;
+  border-radius: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.mensaje-chat p {
+  margin: 0;
+}
+
+.mensaje-chat.usuario {
+  align-self: flex-end;
+  background: #713c27;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.mensaje-chat.asistente {
+  align-self: flex-start;
+  background: white;
+  color: #3b2118;
+  border: 1px solid #ead8cc;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 600px) {
+  .mensaje-chat {
+    max-width: 92%;
+  }
+
+  .asistente-contenedor {
+    flex-direction: column;
+  }
+
+  .asistente-contenedor button {
+    width: 100%;
+  }
+}
+.chat-mensajes {
+  width: 100% !important;
+  align-items: stretch !important;
+}
+
+.mensaje-chat.usuario {
+  align-self: flex-end !important;
+  text-align: right !important;
+}
+
+.mensaje-chat.asistente {
+  align-self: flex-start !important;
+  text-align: left !important;
+}
+/* ENCABEZADO DEL CHAT */
+
+.chat-encabezado {
+  max-width: 650px;
+  margin: 25px auto 0;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #713c27;
+  color: white;
+  border-radius: 15px 15px 0 0;
+  text-align: left;
+}
+
+.chat-avatar {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  overflow: visible;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.chat-encabezado h3 {
+  margin: 0 0 5px;
+}
+
+.chat-encabezado p {
+  margin: 0;
+  font-size: 13px;
+  color: #f5d8c6;
+}
+.avatar-mensaje {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-right: 8px;
+}

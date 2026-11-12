@@ -1,0 +1,403 @@
+import { useEffect, useState } from 'react'
+import { supabase } from './supabase'
+import './App.css'
+
+function App() {
+  const [administrador, setAdministrador] = useState(false)
+  const [contrasena, setContrasena] = useState('')
+  const [errorAdmin, setErrorAdmin] = useState('')
+  const [sesionAdmin, setSesionAdmin] = useState(false)
+  const [emailAdmin, setEmailAdmin] = useState('')
+  useEffect(() => {
+  if (sesionAdmin) {
+    cargarPedidos()
+  }
+}, [sesionAdmin])
+
+async function cargarPedidos() {
+  const { data, error } = await supabase
+    .from('pedidos')
+    .select('*')
+    .order('fecha', { ascending: false })
+
+  if (error) {
+    console.error('Error al cargar pedidos:', error.message)
+    setErrorAdmin('No se pudieron cargar los pedidos')
+    return
+  }
+
+  setPedidos(data || [])
+}
+const [pedidos, setPedidos] = useState(() => {
+  const pedidosGuardados = localStorage.getItem('pedidosRoyalshake')
+
+  return pedidosGuardados ? JSON.parse(pedidosGuardados) : []
+})
+  // FUNCIÓN PARA INGRESAR COMO ADMINISTRADOR
+  async function ingresarAdmin(event) {
+  event.preventDefault()
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email: emailAdmin,
+    password: contrasena
+  })
+
+  if (error) {
+    setErrorAdmin('Correo o contraseña incorrectos')
+  } else {
+    setSesionAdmin(true)
+    setAdministrador(false)
+    setContrasena('')
+    setErrorAdmin('')
+  }
+}
+
+  // FUNCIÓN PARA ENVIAR PEDIDOS POR WHATSAPP
+ async function manejarPedido(event) {
+  event.preventDefault()
+
+  const datos = new FormData(event.target)
+
+  const nombre = datos.get('nombre')
+  const telefono = datos.get('telefono')
+  const malteada = datos.get('malteada')
+  const cantidad = datos.get('cantidad')
+  const detalles = datos.get('detalles')
+
+  const nuevoPedido = {
+    id: Date.now(),
+    nombre,
+    telefono,
+    malteada,
+    cantidad,
+    detalles,
+    fecha: new Date().toLocaleString()
+  }
+
+  const ventanaWhatsApp = window.open('', '_blank')
+
+  const { error } = await supabase
+    .from('pedidos')
+    .insert([
+      {
+        nombre,
+        telefono,
+        malteada,
+        cantidad: Number(cantidad),
+        detalles
+      }
+    ])
+
+  if (error) {
+    alert('No se pudo guardar el pedido: ' + error.message)
+    if (ventanaWhatsApp) ventanaWhatsApp.close()
+    return
+  }
+
+  const pedidosActualizados = [...pedidos, nuevoPedido]
+
+  setPedidos(pedidosActualizados)
+
+  localStorage.setItem(
+    'pedidosRoyalshake',
+    JSON.stringify(pedidosActualizados)
+  )
+
+  const mensaje = `¡Hola Royalshake! Quiero realizar un pedido.
+
+Nombre: ${nombre}
+Teléfono: ${telefono}
+Malteada: ${malteada}
+Cantidad: ${cantidad}
+Detalles: ${detalles || 'Sin detalles adicionales'}`
+
+  const numero = '573234951382'
+
+  const enlace = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`
+
+  if (ventanaWhatsApp) {
+    ventanaWhatsApp.location.href = enlace
+  }
+}
+
+  // FUNCIÓN PARA CERRAR SESIÓN
+  async function cerrarSesionAdmin() {
+  const { error } = await supabase.auth.signOut()
+
+  if (error) {
+    console.error('Error al cerrar sesión:', error.message)
+    return
+  }
+
+  setSesionAdmin(false)
+  setEmailAdmin('')
+  setContrasena('')
+}
+
+  // PANEL DE ADMINISTRACIÓN
+  if (sesionAdmin) {
+    return (
+      <main className="panel-admin">
+
+        <header className="admin-header">
+          <div>
+            <p>ROYALSHAKE</p>
+            <h1>Panel de administración</h1>
+            <span>Bienvenido a la gestión de tu negocio.</span>
+          </div>
+
+          <button onClick={cerrarSesionAdmin}>
+            Cerrar sesión
+          </button>
+        </header>
+
+        <section className="admin-resumen">
+          <article>
+            <h3>Productos</h3>
+           <p>4 malteadas registradas</p>
+          </article>
+
+          <article>
+            <h3>Pedidos</h3>
+            <p>Gestión de pedidos próximamente</p>
+          </article>
+        </section>
+<section className="admin-pedidos">
+  <h2>Pedidos recibidos</h2>
+
+  {pedidos.length === 0 ? (
+    <p>Todavía no hay pedidos registrados.</p>
+  ) : (
+    pedidos.map((pedido) => (
+      <article key={pedido.id}>
+        <h3>{pedido.nombre}</h3>
+        <p>Teléfono: {pedido.telefono}</p>
+        <p>Malteada: {pedido.malteada}</p>
+        <p>Cantidad: {pedido.cantidad}</p>
+        <p>Detalles: {pedido.detalles || 'Sin detalles adicionales'}</p>
+        <p>Fecha: {pedido.fecha}</p>
+      </article>
+    ))
+  )}
+</section>
+        <section className="admin-productos">
+          <h2>Catálogo de productos</h2>
+
+          <ul>
+            <li>Royal Chocolate</li>
+            <li>Royal Fresa</li>
+            <li>Royal Oreo</li>
+            <li>Royal Vainilla</li>
+          </ul>
+        </section>
+
+        
+
+      </main>
+    )
+  }
+
+  // PÁGINA PRINCIPAL
+  return (
+    <main>
+
+      {administrador && (
+        <section className="panel-admin">
+          <h2>Acceso de administrador</h2>
+
+          <form onSubmit={ingresarAdmin}>
+            <input
+  type="email"
+  placeholder="Correo electrónico"
+  value={emailAdmin}
+  onChange={(e) => setEmailAdmin(e.target.value)}
+  required
+/>
+            <input
+              type="password"
+              placeholder="Contraseña de administrador"
+              value={contrasena}
+              onChange={(e) => setContrasena(e.target.value)}
+              required
+            />
+
+            <button type="submit">
+              Ingresar
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setAdministrador(false)}
+            >
+              Cerrar
+            </button>
+          </form>
+
+          <p>{errorAdmin}</p>
+        </section>
+      )}
+
+      <header className="navbar">
+        <h2>ROYALSHAKE</h2>
+
+        <nav>
+          <a href="#inicio">Inicio</a>
+          <a href="#productos">Productos</a>
+          <a href="#contacto">Contacto</a>
+
+          <button
+            className="admin-link"
+            onClick={() => setAdministrador(true)}
+          >
+            Administrador
+          </button>
+        </nav>
+      </header>
+
+      <section className="hero" id="inicio">
+        <div className="hero-content">
+          <p className="subtitle">EL PLACER DE UN BUEN BATIDO</p>
+
+          <h1>El sabor que merece la realeza</h1>
+
+          <p>
+            Descubre una experiencia deliciosa con nuestros
+            malteados preparados especialmente para ti.
+          </p>
+
+          <a href="#productos" className="btn">
+            Ver nuestros productos
+          </a>
+        </div>
+      </section>
+
+      <section className="productos" id="productos">
+        <p className="productos-subtitle">NUESTRA SELECCIÓN</p>
+
+        <h2>Malteadas de la casa</h2>
+
+        <p className="productos-intro">
+          Descubre sabores irresistibles preparados para disfrutar.
+        </p>
+
+        <div className="productos-grid">
+
+          <article className="producto-card">
+            <div className="producto-imagen">
+              <img src="/imagenes/chocolate.jpeg" alt="Malteada Royal Chocolate" />
+            </div>
+
+            <div className="producto-info">
+              <h3>Royal Chocolate</h3>
+              <p>Una deliciosa combinación de leche y chocolate.</p>
+              <span>Precio por definir</span>
+            </div>
+          </article>
+
+          <article className="producto-card">
+            <div className="producto-imagen">
+              <img src="/imagenes/fresa.jpeg" alt="Malteada Royal Fresa" />
+            </div>
+
+            <div className="producto-info">
+              <h3>Royal Fresa</h3>
+              <p>El dulce sabor de la fresa en una malteada cremosa.</p>
+              <span>Precio por definir</span>
+            </div>
+          </article>
+
+          <article className="producto-card">
+            <div className="producto-imagen">
+              <img src="/imagenes/oreo.jpeg" alt="Malteada Royal Oreo" />
+            </div>
+
+            <div className="producto-info">
+              <h3>Royal Oreo</h3>
+              <p>Una mezcla de galletas y crema que te encantará.</p>
+              <span>Precio por definir</span>
+            </div>
+          </article>
+
+          <article className="producto-card">
+            <div className="producto-imagen">
+              <img src="/imagenes/vainilla.jpeg" alt="Malteada Royal Vainilla" />
+            </div>
+
+            <div className="producto-info">
+              <h3>Royal Vainilla</h3>
+              <p>El sabor clásico de la vainilla con textura cremosa.</p>
+              <span>Precio por definir</span>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <section className="contacto" id="contacto">
+        <p className="productos-subtitle">HAZ TU PEDIDO</p>
+
+        <h2>¿Se te antojó una malteada?</h2>
+
+        <p>Completa tus datos y cuéntanos qué deseas disfrutar.</p>
+
+        <form onSubmit={manejarPedido}>
+          <label>Tu nombre</label>
+
+          <input
+            type="text"
+            name="nombre"
+            placeholder="Escribe tu nombre"
+            required
+          />
+
+          <label>Tu teléfono</label>
+
+          <input
+            type="tel"
+            name="telefono"
+            placeholder="Tu número de contacto"
+            required
+          />
+
+          <label>Elige tu malteada</label>
+
+          <select name="malteada" required defaultValue="">
+            <option value="" disabled>Selecciona un sabor</option>
+            <option value="Royal Chocolate">Royal Chocolate</option>
+            <option value="Royal Fresa">Royal Fresa</option>
+            <option value="Royal Oreo">Royal Oreo</option>
+            <option value="Royal Vainilla">Royal Vainilla</option>
+          </select>
+
+          <label>Cantidad</label>
+
+          <input
+            type="number"
+            name="cantidad"
+            min="1"
+            defaultValue="1"
+            required
+          />
+
+          <label>Detalles adicionales</label>
+
+          <textarea
+            name="detalles"
+            placeholder="Escribe aquí tus indicaciones"
+          />
+
+          <button type="submit" className="btn">
+            Enviar pedido
+          </button>
+        </form>
+      </section>
+
+      <footer>
+        <p>ROYALSHAKE © 2026 - El sabor de la realeza</p>
+      </footer>
+
+    </main>
+  )
+}
+
+export default App
