@@ -638,6 +638,7 @@ Detalles: ${detalles || 'Sin detalles adicionales'}`
 
           <input
             type="tel"
+            minLength={10}
             name="telefono"
             placeholder="Tu número de contacto"
             required
