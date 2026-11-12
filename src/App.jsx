@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabase'
 import './App.css'
+function obtenerRutaImagen(imagen) {
+  if (!imagen) return ''
 
+  if (imagen.startsWith('http')) return imagen
+
+  return `${import.meta.env.BASE_URL}${imagen.replace(/^\/+/, '').replace(/^Royalshake\//, '')}`
+}
 function App() {
     const [mensajeIA, setMensajeIA] = useState('')
   
@@ -536,7 +542,7 @@ Detalles: ${detalles || 'Sin detalles adicionales'}`
   {productos.map((producto) => (
     <article className="producto-card" key={producto.id}>
       <div className="producto-imagen">
-        <img src={producto.imagen} alt={producto.nombre} />
+        <img src={obtenerRutaImagen(producto.imagen)} alt={producto.nombre} />
       </div>
 
       <div className="producto-info">
