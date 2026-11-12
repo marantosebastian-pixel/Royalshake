@@ -66,28 +66,28 @@ setMensajesChat((prev) => [
     id: 1,
     nombre: 'Royal Chocolate',
     descripcion: 'Una deliciosa combinación de leche y chocolate.',
-    imagen: '/imagenes/chocolate.jpeg',
+    imagen: `${import.meta.env.BASE_URL}imagenes/chocolate.jpeg`,
     precio: 'Precio por definir'
   },
   {
     id: 2,
     nombre: 'Royal Fresa',
     descripcion: 'El dulce sabor de la fresa en una malteada cremosa.',
-    imagen: '/imagenes/fresa.jpeg',
+    imagen: `${import.meta.env.BASE_URL}imagenes/fresa.jpeg`,
     precio: 'Precio por definir'
   },
   {
     id: 3,
     nombre: 'Royal Oreo',
     descripcion: 'Una mezcla de galletas y crema que te encantará.',
-    imagen: '/imagenes/oreo.jpeg',
+    imagen: `${import.meta.env.BASE_URL}imagenes/oreo.jpeg`,
     precio: 'Precio por definir'
   },
   {
     id: 4,
     nombre: 'Royal Vainilla',
     descripcion: 'El sabor clásico de la vainilla con textura cremosa.',
-    imagen: '/imagenes/vainilla.jpeg',
+    imagen: `${import.meta.env.BASE_URL}imagenes/vainilla.jpeg`,
     precio: 'Precio por definir'
   }
 ])
@@ -408,10 +408,10 @@ Detalles: ${detalles || 'Sin detalles adicionales'}`
       value={nuevaImagen}
       onChange={(e) => setNuevaImagen(e.target.value)}
     >
-      <option value="/imagenes/chocolate.jpeg">Chocolate</option>
-      <option value="/imagenes/fresa.jpeg">Fresa</option>
-      <option value="/imagenes/oreo.jpeg">Oreo</option>
-      <option value="/imagenes/vainilla.jpeg">Vainilla</option>
+      <option value={`${import.meta.env.BASE_URL}imagenes/chocolate.jpeg`}>Chocolate</option>
+<option value={`${import.meta.env.BASE_URL}imagenes/fresa.jpeg`}>Fresa</option>
+<option value={`${import.meta.env.BASE_URL}imagenes/oreo.jpeg`}>Oreo</option>
+<option value={`${import.meta.env.BASE_URL}imagenes/vainilla.jpeg`}>Vainilla</option>
     </select>
 
     <input
@@ -553,7 +553,7 @@ Detalles: ${detalles || 'Sin detalles adicionales'}`
 <section className="asistente-ia" id="asistente-ia">
   <div className="chat-encabezado">
   <div className="chat-avatar">
-  <img src="/royalito.jpeg" alt="Royalito, asistente virtual de Royalshake" />
+  <img src={`${import.meta.env.BASE_URL}royalito.jpeg`} alt="Royalito, asistente virtual de Royalshake" />
 </div>
 
   <div>
@@ -594,7 +594,7 @@ Detalles: ${detalles || 'Sin detalles adicionales'}`
     >
       {mensaje.tipo === 'asistente' && (
         <img
-          src="/royalito.jpeg"
+          src={`${import.meta.env.BASE_URL}royalito.jpeg`}
           alt="Royalito"
           className="avatar-mensaje"
         />
