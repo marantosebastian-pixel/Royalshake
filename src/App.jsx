@@ -542,7 +542,7 @@ Detalles: ${detalles || 'Sin detalles adicionales'}`
   {productos.map((producto) => (
     <article className="producto-card" key={producto.id}>
       <div className="producto-imagen">
-        <img src={obtenerRutaImagen(producto.imagen)} alt={producto.nombre} />
+        <img src={obtenerRutaImagen(producto.imagen)} alt={producto.nombre} loading="lazy" />
       </div>
 
       <div className="producto-info">
