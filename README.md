@@ -1,16 +1,76 @@
-# React + Vite
+# 👑 Royalshake
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web para la gestión y comercialización de malteadas, desarrollada con React, Vite y Supabase.
 
-Currently, two official plugins are available:
+## Descripción del proyecto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Royalshake es una plataforma web que permite a los clientes conocer el catálogo de malteadas, realizar pedidos y recibir recomendaciones mediante un asistente virtual llamado Royalito.
 
-## React Compiler
+También cuenta con un panel administrativo para gestionar productos y supervisar los pedidos recibidos.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Funcionalidades principales
 
-## Expanding the ESLint configuration
+- Catálogo de malteadas.
+- Registro de pedidos.
+- Integración con WhatsApp.
+- Panel de administración.
+- Inicio de sesión para administradores.
+- Creación, edición y eliminación de productos.
+- Gestión de estados de pedidos.
+- Asistente virtual Royalito con inteligencia artificial.
+- Diseño adaptable a dispositivos móviles y computadores.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tecnologías utilizadas
+
+- React
+- Vite
+- JavaScript
+- CSS
+- Supabase
+- Git y GitHub
+- Netlify
+
+## Instalación y ejecución
+
+Clonar el repositorio:
+
+```bash
+git clone https://github.com/marantosebastian-pixel/Royalshake.git
+```
+
+Ingresar a la carpeta:
+
+```bash
+cd Royalshake
+```
+
+Instalar dependencias:
+
+```bash
+npm install
+```
+
+Configurar las variables de entorno necesarias en un archivo `.env`:
+
+```env
+VITE_SUPABASE_URL=tu_url_de_supabase
+VITE_SUPABASE_ANON_KEY=tu_clave_publica
+```
+
+Iniciar el proyecto:
+
+```bash
+npm run dev
+```
+
+## Despliegue
+
+El proyecto cuenta con una versión publicada en Netlify.
+
+## Autor
+
+Sebastian Cabarcas
+
+## Proyecto académico
+
+Royalshake
