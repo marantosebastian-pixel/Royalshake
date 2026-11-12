@@ -74,3 +74,12 @@ Sebastian Cabarcas
 ## Proyecto académico
 
 Royalshake
+
+## 🌐 Aplicación publicada
+
+Royalshake está disponible en las siguientes plataformas:
+
+- **GitHub Pages:** https://marantosebastian-pixel.github.io/Royalshake/
+- **Netlify:** https://storied-travesseiro-43e6e1.netlify.app/
+
+El despliegue en GitHub Pages se realiza automáticamente mediante GitHub Actions cada vez que se actualiza la rama `master`.
