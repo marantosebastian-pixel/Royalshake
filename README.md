@@ -83,3 +83,15 @@ Royalshake está disponible en las siguientes plataformas:
 - **Netlify:** https://storied-travesseiro-43e6e1.netlify.app/
 
 El despliegue en GitHub Pages se realiza automáticamente mediante GitHub Actions cada vez que se actualiza la rama `master`.
+
+## ⚙️ Configuración del entorno
+
+Para ejecutar Royalshake en otro computador:
+
+1. Clonar el repositorio de GitHub.
+2. Instalar las dependencias con `npm install`.
+3. Crear el archivo `.env` a partir de `.env.example`.
+4. Configurar las credenciales de Supabase en el archivo `.env`.
+5. Iniciar el proyecto con `npm run dev`.
+
+**Importante:** No publicar ni compartir el archivo `.env`, ya que contiene las credenciales de configuración.
